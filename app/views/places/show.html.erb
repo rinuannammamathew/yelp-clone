@@ -4,26 +4,15 @@
   <br/><br/>
   <p><%= @place.description %></p>
   
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    #map {
-      height: 300px;
-    }
-  </style>
-  </head>
-  <body>
-  <div id="map"></div>
+
+  <% if @place.latitude.present? && @place.longitude.present? %>
   <script>
 
     function initMap() {
-      var myLatLng = {lat: -25.363, lng: 131.044};
+       var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
 
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 12,
         center: myLatLng
       });
 
@@ -41,7 +30,8 @@
 
   <div id="map"></div>
   
-
+  <% end %>
+  <br />
   <div class="float-right">
     <% if current_user && current_user == @place.user %>
       <%= link_to 'Edit', edit_place_path(@place), class: 'btn btn-primary' %>
